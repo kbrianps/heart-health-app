@@ -17,10 +17,8 @@
  */
 
 import {
-  createContext,
   PropsWithChildren,
   useCallback,
-  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -28,19 +26,8 @@ import {
 import { AUTH_LOGOUT_EVENT } from '../lib/api';
 import { storage } from '../lib/storage';
 import * as authApi from './api';
+import { AuthContext, type AuthContextValue } from './context';
 import type { AuthUser, RegisterRequest } from './types';
-
-interface AuthContextValue {
-  user: AuthUser | null;
-  token: string | null;
-  loading: boolean;
-  isAuthenticated: boolean;
-  login: (email: string, senha: string) => Promise<void>;
-  register: (payload: RegisterRequest) => Promise<void>;
-  logout: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -108,12 +95,4 @@ export function AuthProvider({ children }: PropsWithChildren) {
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth(): AuthContextValue {
-  const ctx = useContext(AuthContext);
-  if (!ctx) {
-    throw new Error('useAuth deve ser usado dentro de <AuthProvider>');
-  }
-  return ctx;
 }

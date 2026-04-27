@@ -37,7 +37,7 @@ import {
   serverOutline,
 } from 'ionicons/icons';
 
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../auth/useAuth';
 
 const TEAM = [
   {

@@ -1,0 +1,42 @@
+name: CI
+
+# Roda em todo push e PR para main, garantindo que código quebrado seja
+# detectado antes de chegar à branch principal. O Cloudflare Pages tem
+# seu próprio pipeline de build/deploy, então este workflow foca em
+# qualidade do código (lint + build).
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Lint e build (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['20']
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Instala dependências
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build de produção
+        run: npm run build
+        env:
+          VITE_API_URL: https://heart-health-api.kbrianps.com/api

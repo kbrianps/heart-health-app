@@ -25,7 +25,7 @@ import {
   useIonViewWillEnter,
 } from '@ionic/react';
 
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../auth/useAuth';
 import { loginSchema, type LoginFormValues } from '../auth/schemas';
 import { extractErrorMessage } from '../lib/api';
 

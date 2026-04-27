@@ -26,7 +26,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../auth/useAuth';
 import { registerSchema, type RegisterFormValues } from '../auth/schemas';
 import { extractErrorMessage } from '../lib/api';
 
