@@ -1,7 +1,24 @@
+/**
+ * Componente raiz do app.
+ *
+ * Envolve todas as rotas com o AuthProvider, monta o IonReactRouter e
+ * define quais rotas são públicas (login, register) e quais ficam atrás
+ * do PrivateRoute (todas as `/tabs/*`).
+ *
+ * O Redirect na raiz aponta para `/tabs/records` (a área autenticada
+ * default). Se o usuário não estiver autenticado, o PrivateRoute devolve
+ * outro redirect para `/login`.
+ */
+
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+
+import { AuthProvider } from './auth/AuthContext';
+import { PrivateRoute } from './auth/PrivateRoute';
+import { TabsLayout } from './components/TabsLayout';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -19,18 +36,10 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
+/* Dark mode (segue o sistema) */
 import '@ionic/react/css/palettes/dark.system.css';
 
-/* Theme variables */
+/* Theme variables (paleta cardíaca) */
 import './theme/variables.css';
 
 setupIonicReact();
@@ -38,14 +47,24 @@ setupIonicReact();
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
+      <AuthProvider>
+        <IonRouterOutlet>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+
+          <PrivateRoute path="/tabs">
+            <TabsLayout />
+          </PrivateRoute>
+
+          <Route exact path="/">
+            <Redirect to="/tabs/records" />
+          </Route>
+        </IonRouterOutlet>
+      </AuthProvider>
     </IonReactRouter>
   </IonApp>
 );
