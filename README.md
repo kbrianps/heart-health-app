@@ -28,7 +28,7 @@ hospedada em `https://heart-health-api.kbrianps.com/api`.
 
 ## Links
 
-- **App em produção (web):** https://heart-health-app.kbrianps.com
+- **App em produção (web):** https://heart-health-app.kbrianps.com (ou https://heart-health-app.kbrianps.workers.dev)
 - **API consumida:** https://heart-health-api.kbrianps.com/api
 - **Documentação interativa (Swagger UI):** https://heart-health-api.kbrianps.com/docs
 - **Repositório do backend:** https://github.com/kbrianps/heart-health-api
