@@ -6,3 +6,6 @@ compatibility_date = "2026-04-27"
 # O Workers cuida automaticamente do roteamento, SSL e CDN global.
 [assets]
 directory = "./dist"
+# Para SPAs com React Router: serve index.html para rotas não encontradas
+# em vez de retornar 404, deixando o cliente tratar a navegação.
+not_found_handling = "single-page-application"
