@@ -1,0 +1,8 @@
+name = "heart-health-app"
+compatibility_date = "2026-04-27"
+
+# Diz ao Cloudflare Workers que este é um site estático: os arquivos
+# gerados pelo `npm run build` (pasta dist/) serão servidos como assets.
+# O Workers cuida automaticamente do roteamento, SSL e CDN global.
+[assets]
+directory = "./dist"
